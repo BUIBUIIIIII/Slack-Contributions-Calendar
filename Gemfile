@@ -7,3 +7,4 @@ gem "sinatra"
 gem "webrick"
 gem "activerecord"
 gem "dotenv"
+gem 'slack-ruby-client', '~> 2.1'
