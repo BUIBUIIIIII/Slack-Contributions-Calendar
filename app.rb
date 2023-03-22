@@ -1,5 +1,8 @@
 require 'sinatra'
+require 'dotenv'
+
+Dotenv.load
 
 get '/' do
-  'Hello world!'
+  erb :index
 end
