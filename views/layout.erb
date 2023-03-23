@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://unpkg.com/cal-heatmap/dist/cal-heatmap.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/cal-heatmap/dist/cal-heatmap.css">
@@ -12,8 +13,75 @@
 <body>
     <div id="cal-heatmap"></div>
     <script>
+        const datas = {
+            "1530370800" : 1, // 2018/07/01
+            "1530457200" : 3, // 2018/07/02
+            "1533049200" : 5, // 2018/08/01
+            "1533135600" : 7, // 2018/08/02
+            "1546268400" : 10 // 2019/01/01
+        };
+        // var cal = new CalHeatMap();
+        // var now = new Date();
+        // cal.init({
+        //     itemSelector: '#cal-heatmap',
+        //     domain: "month",
+        //     data: datas,
+        //     domainLabelFormat: '%Y-%m',
+        //     start: new Date(now.getFullYear(), now.getMonth() - 11),
+        //     cellSize: 10,
+        //     range: 12,
+        //     legend: [1, 3, 5, 7, 10],
+        // });
+
+
+
         const cal = new CalHeatmap();
-        cal.paint({});
+        cal.paint({
+            range: 9
+        });
+
+
+        json = <%= @messages %>;
+        const dateTime = json.messages.map((message) => {
+            const num = parseInt(message.ts) * 1000;
+            const date = new Date(num);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const str = year + "-" + month + "-" + day;
+            return str;
+            // return Number(date);
+        });
+        console.log(dateTime);
+
+        // const counts = {};
+
+        // dateTime.forEach((value, index) => {
+        //     const date = new Date(value)
+        //     const str = date.getFullYear().toString()
+        //               + date.getMonth().toString()
+        //               + date.getDate().toString();
+        //     // const key = dateTime[index];
+        //     if (counts[str]) {
+        //         counts[str] = counts[str] + 1;
+        //     } else {
+        //         counts[str] = 1;
+        //     }
+        // })
+
+        // console.log(counts);
+
+        const counts = {};
+        dateTime.forEach((value, index) => {
+            const key = dateTime[index];
+            counts[key] = (counts[key])? counts[key] + 1 : 1;
+        });
+        for(let i=0; i < dateTime.length; i++) {
+            const key = dateTime[i];
+            counts[key] = (counts[key])? counts[key] + 1 : 1;
+        }
+        
+        console.log(counts);
     </script>
 </body>
 </html>

@@ -16,6 +16,7 @@ get '/conversations_history' do
   # channel = params[:id]
   text = "Hello World"
   # client.chat_postMessage(channel: '#slack-contributions-calendar', text: text)
-  messages = client.conversations_info(channel: 'C04V36GTFEW')
-  pp messages.to_json
+  @messages = client.conversations_history(channel: 'C04V36GTFEW').to_json
+  # @json = messages.to_json
+  erb :index
 end
