@@ -37,7 +37,9 @@
 
         const cal = new CalHeatmap();
         cal.paint({
-            range: 9
+            // range: 9,
+            // domain: "month"
+            // domain: {type: 'year'},
         });
 
 
@@ -76,10 +78,11 @@
             const key = dateTime[index];
             counts[key] = (counts[key])? counts[key] + 1 : 1;
         });
-        for(let i=0; i < dateTime.length; i++) {
-            const key = dateTime[i];
-            counts[key] = (counts[key])? counts[key] + 1 : 1;
-        }
+
+        // for(let i=0; i < dateTime.length; i++) {
+        //     const key = dateTime[i];
+        //     counts[key] = (counts[key])? counts[key] + 1 : 1;
+        // }
         
         console.log(counts);
     </script>
