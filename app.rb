@@ -8,15 +8,24 @@ Slack.configure do |config|
 end
 
 get '/' do
+  erb :request
+end
+
+get '/conversations_history/:id' do
+  client = Slack::Web::Client.new
+  channel = params[:id]
+  # text = "Hello World"
+  # client.chat_postMessage(channel: '#slack-contributions-calendar', text: text)
+  @messages = client.conversations_history(channel: channel).to_json
+  # @json = messages.to_json
   erb :index
 end
 
-get '/conversations_history' do
-  client = Slack::Web::Client.new
-  # channel = params[:id]
-  text = "Hello World"
-  # client.chat_postMessage(channel: '#slack-contributions-calendar', text: text)
-  @messages = client.conversations_history(channel: 'C04V36GTFEW').to_json
-  # @json = messages.to_json
-  erb :index
+post '/request' do
+  # Slack.configure do |config|
+    # config.token = ENV["SLACKAPIKEY"]
+    # config.token = params[:key]
+  # end
+  url = '/conversations_history/' + params[:channelid] 
+  redirect url
 end

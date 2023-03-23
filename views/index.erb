@@ -1,0 +1,47 @@
+<div class="graph">
+    <canvas id="myChart"></canvas>
+</div>
+<script>
+    json = <%= @messages %>;
+    const dateTime = json.messages.map((message) => {
+        const num = parseInt(message.ts) * 1000;
+        const date = new Date(num);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const day = date.getDate();
+        const str = year + "-" + month + "-" + day;
+        return str;
+    });
+    console.log(dateTime);
+
+    const counts = {};
+    let array = [];
+    dateTime.forEach((value, index) => {
+        const key = dateTime[index];
+        counts[key] = (counts[key])? counts[key] + 1 : 1;
+    });
+    console.log(counts);
+
+    array = Object.keys(counts);
+    console.log(array);
+
+    obj = array.map((key) => {
+        return {x: key, y: counts[key]};
+    }).reverse();
+    console.log(obj);
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: 'Slack Contributions Calendar',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            fill: false,
+            data: obj
+        }]
+        },
+        options: {}
+    });
+</script>
